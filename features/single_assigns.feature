@@ -85,3 +85,14 @@ Scenario: Single Assign src and dest is label
     And I load prg "single_assign_dest_src_label.prg"
     When I execute the procedure at $400 for no more than 7 instructions
     Then I expect to see $0500 equal 16
+
+Scenario: Single Assign src and dest is label
+    Given I have a simple overclocked 6502 system
+    And That does fail on BRK
+    And I run the command line: D:\Python\Python35\python.exe D:\GitHub\MLA6502\tassParser.py single_assign_special.asm
+    And I run the command line: D:/pathstuff/64tass.exe -a single_assign_special.mla -o single_assign_special.prg
+    And I load prg "single_assign_special.prg"
+    When I execute the procedure at $400 for no more than 7 instructions
+    Then I expect to see $0500 greater than 127
+    Then I expect to see $0501 less than 128
+    Then I expect to see $0502 greater than 0
